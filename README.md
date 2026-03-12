@@ -80,5 +80,5 @@ This challenge uses an **end-to-end** encryption pipeline to protect results and
 ---
 
 <div align="center">
-<sub>Challenge powered by <b>GitHub Actions</b> • Created by <b>Binta & Badélé</b></sub>
+<sub>• Created by <b>Binta & Badélé</b></sub>
 </div>
