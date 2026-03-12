@@ -1,0 +1,27 @@
+name: 🧠 Evaluate Submission
+on:
+  push:
+    branches: [ main ]
+    paths: ['submissions/**.enc']
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install cryptography scikit-learn pandas tabulate
+      - env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        run: |
+          python leaderboard/decrypt.py
+          python leaderboard/update_leaderboard.py
+      - run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md leaderboard/leaderboard.csv
+          git commit -m "🏆 Update Leaderboard [skip ci]" || echo "No changes"
+          git push
