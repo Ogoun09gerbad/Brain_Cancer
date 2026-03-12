@@ -19,8 +19,8 @@
 
 | User              |   Score1 (Accuracy) |   Score2 (F1) |
 |:------------------|--------------------:|--------------:|
-| 🥇 Gedeon & James |                0.88 |          0.91 |
-| 🥈 LogicX Model   |                0.85 |          0.89 |
+| 🥇 Binta & Badele |                0.88 |          0.91 |
+| 🥈 Gedeon & James |                0.85 |          0.89 |
 
 > 📣 The leaderboard is automatically updated via **GitHub Actions** after each valid submission.
 > Full history: [`leaderboard/leaderboard.csv`](leaderboard/leaderboard.csv)
