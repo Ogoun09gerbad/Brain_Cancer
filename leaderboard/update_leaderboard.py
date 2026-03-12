@@ -1,32 +1,36 @@
 import pandas as pd
 import re
+import os
 
 def update_readme():
-    # 1. Lire les scores réels depuis le CSV
-    df = pd.read_csv('leaderboard/leaderboard.csv')
+    csv_path = 'leaderboard/leaderboard.csv'
+    if not os.path.exists(csv_path):
+        print("Erreur : Fichier CSV introuvable")
+        return
+
+    # Lire les scores réels
+    df = pd.read_csv(csv_path)
     
-    # 2. Trier par score (Accuracy) pour avoir le vrai classement
+    # Trier par le premier score (Accuracy)
     df = df.sort_values(by=df.columns[1], ascending=False)
     
-    # 3. Transformer le tableau en format Markdown
+    # Générer le tableau Markdown
     markdown_table = df.to_markdown(index=False)
     
-    # 4. Lire le README
+    # Lire le README
     with open('README.md', 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # 5. Remplacer l'ancien tableau par le nouveau
-    # On cherche ce qui se trouve entre le titre Leaderboard et la suite
-    new_content = re.sub(
-        r"(## 🏆 Leaderboard\n\n)(.*?)(?=\n\n> 📣)", 
-        r"\1" + markdown_table, 
-        content, 
-        flags=re.DOTALL
-    )
-
-    with open('README.md', 'w', encoding='utf-8') as f:
-        f.write(new_content)
-    print("✅ README mis à jour avec les vrais scores du CSV !")
+    # Remplacer la section Leaderboard
+    # On cherche entre le titre Leaderboard et la suite
+    pattern = r"(## 🏆 Leaderboard\n\n)(.*?)(?=\n\n> 📣)"
+    if re.search(pattern, content, flags=re.DOTALL):
+        new_content = re.sub(pattern, r"\1" + markdown_table, content, flags=re.DOTALL)
+        with open('README.md', 'w', encoding='utf-8') as f:
+            f.write(new_content)
+        print("✅ README mis à jour avec succès !")
+    else:
+        print("⚠️ Balise Leaderboard non trouvée dans le README")
 
 if __name__ == "__main__":
     update_readme()

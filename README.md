@@ -17,11 +17,9 @@
 
 ## 🏆 Leaderboard
 
-| User | Score1 (Accuracy) | Score2 (F1) |
-|:---|:---|:---|
-| 🥇 **Binta & Badélé** | **0.91** | **0.92** |
-| 🥈 — | — | — |
-| 🥉 — | — | — |
+| User              |   Score1 (Accuracy) |   Score2 (F1) |
+|:------------------|--------------------:|--------------:|
+| 🥇 Binta & Badélé |                0.88 |          0.91 |
 
 > 📣 The leaderboard is automatically updated via **GitHub Actions** after each valid submission.
 > Full history: [`leaderboard/leaderboard.csv`](leaderboard/leaderboard.csv)
