@@ -10,20 +10,38 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Récupère tout l'historique pour éviter les erreurs de push
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
       - run: pip install cryptography scikit-learn pandas tabulate
+
       - env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
           python leaderboard/decrypt.py
           export SUBMITTER_NAME=$(basename submissions/*.enc .enc)
-          python evaluation/evaluate.py
+          # Si evaluate.py existe, on le lance, sinon on continue
+          if [ -f evaluation/evaluate.py ]; then
+            python evaluation/evaluate.py
+          fi
           python leaderboard/update_leaderboard.py
-      - run: |
+
+      - name: Commit and Push changes
+        run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add README.md leaderboard/leaderboard.csv
-          git commit -m "🏆 Update Leaderboard [skip ci]" || echo "No changes"
-          git push origin main
+          
+          # La magie est ici : on récupère les changements distants et on applique les nôtres par-dessus
+          git pull origin main --rebase
+          
+          if ! git diff --cached --quiet; then
+            git commit -m "🏆 Update Leaderboard [skip ci]"
+            git push origin main
+          else
+            echo "No changes to commit"
+          fi
