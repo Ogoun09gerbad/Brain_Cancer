@@ -7,7 +7,7 @@
 ![Images](https://img.shields.io/badge/MRI%20Images-7023-orange)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 
-**Pouvez-vous détecter les tumeurs cérébrales à partir d'IRM ?**
+**Can you detect brain tumors from MRI scans?**
 
 [📊 Leaderboard](#-leaderboard) • [📁 Dataset](#-dataset) • [🚀 Quick Start](#-quick-start) • [📤 How to Submit](#-submission-process) • [🔒 Security](#-security-system)
 
@@ -19,26 +19,26 @@
 
 | User | Score1 (Accuracy) | Score2 (F1) |
 |:---|:---|:---|
-| 🥇 **Binta** | **0.88** | **0.91** |
+| 🥇 **Binta & Badélé** | **0.91** | **0.92** |
 | 🥈 — | — | — |
 | 🥉 — | — | — |
 
-> 📣 Le classement est mis à jour automatiquement via **GitHub Actions** après chaque soumission valide.
-> Historique complet : [`leaderboard/leaderboard.csv`](leaderboard/leaderboard.csv)
+> 📣 The leaderboard is automatically updated via **GitHub Actions** after each valid submission.
+> Full history: [`leaderboard/leaderboard.csv`](leaderboard/leaderboard.csv)
 
 ---
 
-## 📋 Présentation du Projet
+## 📋 Project Overview
 
-### La Mission
-Classifier des images IRM cérébrales en **4 catégories** :
+### The Mission
+Classify brain MRI images into **4 categories**:
 
-| Label | Type de Tumeur | Description |
+| Label | Tumor Type | Description |
 |-------|-------|-------------|
-| `0` | `glioma` | Gliome — se développe dans les cellules gliales |
-| `1` | `meningioma` | Méningiome — se développe dans les méninges |
-| `2` | `no_tumor` | Cerveau Sain — aucune tumeur détectée |
-| `3` | `pituitary` | Adénome hypophysaire — dans l'hypophyse |
+| `0` | `glioma` | Glioma — arises from glial cells |
+| `1` | `meningioma` | Meningioma — arises from the meninges |
+| `2` | `no_tumor` | Healthy Brain — no tumor detected |
+| `3` | `pituitary` | Pituitary Adenoma — in the pituitary gland |
 
 ---
 
@@ -46,12 +46,12 @@ Classifier des images IRM cérébrales en **4 catégories** :
 
 **Source**: [Brain Tumor MRI Dataset — Kaggle](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset)
 
-- **Total** : 7 023 images IRM
-- **Format** : JPEG, tailles variables
+- **Total**: 7,023 MRI images
+- **Format**: JPEG, variable sizes
 
 ---
 
-## 🚀 Guide de démarrage rapide
+## 🚀 Quick Start Guide
 
 ### 1. Installation
 ```bash
@@ -60,26 +60,27 @@ cd Brain_Cancer
 pip install pandas cryptography tabulate scikit-learn
 ```
 
-### 2. Chiffrer votre résultat
+### 2. Encrypt your result
+Use the official encryption script with the public key:
 ```bash
-python3 simple_encrypt.py
+python3 encryption/encrypt.py your_predictions.csv public_key.pem submissions/your_team_name.enc
 ```
 
-### 3. Soumettre
+### 3. Submit
 ```bash
-git add submissions/baseline.enc
-git commit -m "Nouvelle soumission"
+git add submissions/your_team_name.enc
+git commit -m "New submission"
 git push origin main
 ```
 
 ---
 
-## 🔒 Système de Sécurité (RSA)
+## 🔒 Security System (RSA)
 
-Ce challenge utilise un pipeline de chiffrement **bout-en-bout** pour protéger les résultats.
+This challenge uses an **end-to-end** encryption pipeline to protect results and ensure fair competition.
 
 ---
 
 <div align="center">
-<sub>Challenge propulsé par <b>GitHub Actions</b> • Créé par <b>Binta</b></sub>
+<sub>Challenge powered by <b>GitHub Actions</b> • Created by <b>Binta & Badélé</b></sub>
 </div>
