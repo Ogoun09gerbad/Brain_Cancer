@@ -18,10 +18,12 @@ jobs:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
           python leaderboard/decrypt.py
+          export SUBMITTER_NAME=$(basename submissions/*.enc .enc)
+          python evaluation/evaluate.py
           python leaderboard/update_leaderboard.py
       - run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add README.md leaderboard/leaderboard.csv
           git commit -m "🏆 Update Leaderboard [skip ci]" || echo "No changes"
-          git push
+          git push origin main
