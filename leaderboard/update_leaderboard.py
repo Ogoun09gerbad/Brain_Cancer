@@ -1,40 +1,24 @@
 import pandas as pd
-import os
 
-def update():
-    try:
-        # 1. Lire le résultat qui vient d'être décrypté
-        with open("leaderboard/last_result.csv", "r") as f:
-            data = f.read().strip().split(',')
-        
-        user = data[0]
-        score1 = float(data[1])
-        score2 = float(data[2])
+def sync_readme():
+    # 1. Lire les vrais scores
+    df = pd.read_csv('leaderboard/leaderboard.csv')
+    
+    # 2. Trier par score (Accuracy)
+    df = df.sort_values(by='Score1', ascending=False)
+    
+    # 3. Créer le tableau au format Markdown
+    table = df.to_markdown(index=False)
+    
+    # 4. Lire le README actuel
+    with open('README.md', 'r') as f:
+        content = f.read()
 
-        # 2. Charger ou créer le leaderboard
-        lb_path = "leaderboard/leaderboard.csv"
-        if os.path.exists(lb_path):
-            df = pd.read_csv(lb_path)
-        else:
-            df = pd.DataFrame(columns=["User", "Score1", "Score2"])
-
-        # 3. Ajouter le nouveau score et trier
-        new_row = pd.DataFrame([{"User": user, "Score1": score1, "Score2": score2}])
-        df = pd.concat([df, new_row], ignore_index=True)
-        df = df.sort_values(by="Score1", ascending=False).drop_duplicates(subset=["User"], keep='first')
-        
-        # 4. Sauvegarder
-        df.to_csv(lb_path, index=False)
-        
-        # 5. Mettre à jour le README
-        with open("README.md", "w") as f:
-            f.write("# 🏆 Brain Tumor Challenge Leaderboard\n\n")
-            f.write(df.to_markdown(index=False))
-        
-        print("✅ Leaderboard et README mis à jour !")
-    except Exception as e:
-        print(f"Erreur lors de la mise à jour : {e}")
-        exit(1)
+    # 5. Remplacer la section entre deux balises (si tu en as) 
+    # ou simplement reconstruire la section Leaderboard
+    # Ici, on va juste s'assurer que le tableau est mis à jour
+    print("Mise à jour du README avec les nouveaux scores...")
+    # (Logique de remplacement de texte ici)
 
 if __name__ == "__main__":
-    update()
+    sync_readme()
